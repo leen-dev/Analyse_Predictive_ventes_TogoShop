@@ -1,0 +1,114 @@
+/ simplon
+2. Le jeu de données
+Fichier	ecommerce_togo.csv
+Volume	≈ 3 000 commandes, 22 colonnes
+Granularité	Une ligne = une commande
+Particularités	contient des valeurs manquantes et quelques doublons (à nettoyer)
+Devise	Franc CFA (FCFA)
+Dictionnaire des données
+Variable	Type	Description
+id_commande	texte	Identifiant unique de la commande
+id_client	texte	Identifiant du client (un client peut avoir plusieurs commandes)
+ville	catégorie	Ville de livraison (Lomé, Sokodé, Kara, Kpalimé…)
+categorie	catégorie	Catégorie du produit (Électronique, Mode, Maison…)
+canal_achat	catégorie	Application mobile / Site web / Réseaux sociaux
+mode_paiement	catégorie	Mobile Money / Espèces à la livraison / Carte bancaire
+age_client	numérique	Âge du client (années)
+genre	catégorie	F / H
+anciennete_client_jours	numérique	Ancienneté du client (jours)
+client_premium	binaire	1 = client premium, 0 = standard
+quantite	numérique	Nombre d’articles commandés
+prix_unitaire_fcfa	numérique	Prix unitaire (FCFA)
+remise_pct	numérique	Remise appliquée (%)
+frais_livraison_fcfa	numérique	Frais de livraison (FCFA)
+montant_total_fcfa	numérique	CIBLE RÉGRESSION — montant total payé
+mois	numérique	Mois de la commande (1–12)
+jour_semaine	catégorie	Jour de la commande (Lun…Dim)
+delai_livraison_jours	numérique	Délai de livraison (jours)
+retard_livraison	binaire	1 si livré en plus de 5 jours
+satisfaction_1_5	numérique	Note de satisfaction (1 à 5)
+satisfait	binaire	CIBLE CLASSIFICATION — 1 si note ≥ 4
+retour_produit	binaire	1 si le produit a été retourné
+À noter
+La cible de régression est montant_total_fcfa. La cible de classification est satisfait. Pour le clustering, vous travaillez sans cible sur les variables comportementales du client.
+3. Travail demandé
+Le projet est organisé en cinq parties. Respectez cet ordre : chaque partie s’appuie sur la précédente.
+Partie A — Préparation et analyse exploratoire (EDA)
+1.	Charger les données, inspecter la structure (types, dimensions, premières lignes).
+2.	Nettoyer : traiter les doublons et les valeurs manquantes (justifiez votre stratégie : suppression vs imputation).
+3.	Produire des statistiques descriptives (tendance centrale, dispersion) pour les variables clés.
+4.	Identifier au moins trois constats intéressants (ex. catégorie la plus rentable, impact du retard sur la satisfaction, ville la plus active).
+Partie B — Visualisation de données
+Produisez des visualisations soignées (titres, axes légendés, couleurs lisibles). Vous devez utiliser les trois bibliothèques :
+Avec matplotlib
+–	Un histogramme de la distribution des montants de commande.
+–	Une série temporelle : évolution du chiffre d’affaires par mois.
+Avec seaborn
+–	Une heatmap des corrélations entre variables numériques.
+–	Un boxplot du montant par catégorie de produit (ou de la satisfaction par retard).
+Avec Plotly (interactif)
+–	Au moins un graphique interactif (ex. carte/bar chart du CA par ville, ou nuage de points montant × délai colorié par satisfaction).
+Conseil
+Chaque graphique doit raconter quelque chose. Sous chaque visualisation, écrivez une à deux phrases d’interprétation : que montre ce graphique, et en quoi est-ce utile pour TogoShop ?
+Partie C — Régression : prédire le montant d’une commande
+5.	Construire X / y (cible = montant_total_fcfa), préparer un pipeline (imputation, encodage, scaling).
+6.	Entraîner au moins deux modèles (ex. régression linéaire et Random Forest).
+7.	Évaluer avec MAE, RMSE et R² sur un jeu de test, et comparer les modèles.
+8.	Analyser les variables les plus influentes et interpréter.
+Partie D — Classification : prédire la satisfaction client
+9.	Cible = satisfait. Vérifier l’équilibre des classes et faire un split stratifié.
+10.	Entraîner au moins deux modèles de classification.
+11.	Évaluer avec précision, rappel, F1 et ROC-AUC ; afficher la matrice de confusion.
+12.	Discuter : quelle métrique privilégier du point de vue de TogoShop, et pourquoi ?
+Partie E — Clustering : segmenter les clients
+13.	Sélectionner des variables comportementales pertinentes et les standardiser.
+14.	Déterminer le nombre de segments (méthode du coude + silhouette).
+15.	Appliquer K-Means, visualiser les segments (ACP en 2D).
+16.	Nommer chaque segment et proposer une action marketing par segment.
+4. Livrables attendus
+Vous rendez une archive nommée 
+NOM_Prenom_ProjetFinal/
+  ├── notebook_projet.ipynb     # code complet, exécuté, commenté
+  ├── rapport_synthese.pdf      # 4 à 6 pages : résultats + recommandations
+  └── (éventuels) graphiques exportés
+Le notebook
+•	Exécutable de bout en bout sans erreur (Cellules > Exécuter tout).
+•	Organisé en sections claires (A, B, C, D, E) avec cellules Markdown explicatives.
+•	Code lisible et commenté ; chaque graphique accompagné de son interprétation.
+Le rapport de synthèse
+•	Rappel du contexte et de la démarche.
+•	Les 3 à 5 constats majeurs de l’analyse, illustrés.
+•	Les performances des modèles (tableau de scores).
+•	Des recommandations concrètes pour TogoShop (au moins 3).
+5. Barème d’évaluation (sur 100)
+Critère évalué	Détail	Points
+A. Préparation & EDA	Nettoyage justifié, stats descriptives, constats pertinents	20
+B. Visualisation	matplotlib + seaborn + Plotly, graphiques lisibles et interprétés	20
+C. Régression	Pipeline, 2 modèles, MAE/RMSE/R², interprétation	15
+D. Classification	Split stratifié, métriques adaptées, matrice de confusion, discussion	20
+E. Clustering	Choix de k justifié, K-Means, visualisation, segments nommés	10
+Rapport & recommandations	Clarté, synthèse, recommandations métier actionnables	10
+Qualité du code & du notebook	Lisibilité, structure, reproductibilité	5
+TOTAL	100
+Bonus (jusqu’à +5 points)
+Travail supplémentaire valorisé : optimisation des hyperparamètres (GridSearchCV), test d’un modèle de boosting (XGBoost), tableau de bord interactif, ou analyse géographique approfondie par ville.
+6. Pour démarrer
+Environnement
+pip install pandas numpy matplotlib seaborn plotly scikit-learn jupyter
+jupyter notebook
+Squelette de départ
+import pandas as pd, numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+import plotly.express as px
+ 
+df = pd.read_csv('ecommerce_togo.csv')
+print(df.shape)
+df.head()
+ 
+# Partie A : df.info(), df.describe(), df.isna().sum(), df.duplicated().sum() …
+Conseils méthodologiques
+•	Séparez toujours train et test avant de standardiser (évitez la fuite de données).
+•	Ne cherchez pas le modèle le plus complexe : un modèle simple bien évalué et bien expliqué vaut mieux.
+•	Soignez la narration : un projet de data, c’est autant l’analyse que la manière de la raconter.
+Bon projet — et faites parler les données !
